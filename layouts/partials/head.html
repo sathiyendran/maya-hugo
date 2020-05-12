@@ -1,13 +1,28 @@
 <head>
   <meta charset="utf-8">
-  <title>{{ .Site.Title }}</title>
+  <title>{{ .Title }}</title>
 
   {{ "<!-- mobile responsive meta -->" | safeHTML }}
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}">
-  {{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
-  {{ hugo.Generator }}
 
+  <meta name="description"
+    content="{{ with .Description }}{{ . }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}">
+  {{ with .Site.Params.author }}
+  <meta name="author" content="{{ . }}">{{ end }}
+
+  <!-- Open Graph Protocol http://ogp.me/ -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="{{ if .Title }}{{ .Title }}{{ else }}{{ .Site.Title }}{{ end }}">
+  <meta property="og:image"
+    content="{{ if .Params.image }}{{.Site.BaseURL}}/images/{{.Params.image}}{{ else }}{{.Site.BaseURL}}/images/site-logo.png{{ end }}">
+  <meta property="og:description"
+    content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.SiteDescription }}{{ end }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.ico">
+  <script data-ad-client="ca-pub-8988165810598781" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   {{ "<!-- plugins -->" | safeHTML }}
   {{ range .Site.Params.plugins.css }}
   <link rel="stylesheet" href="{{ .link | absURL }} ">

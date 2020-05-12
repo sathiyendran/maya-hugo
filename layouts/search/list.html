@@ -1,22 +1,16 @@
 {{ define "main" }}
-
-<!-- page-title -->
-<section class="section bg-secondary">
-  <div class="container">
+<!-- category post -->
+<section>
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-12">
-        <h4>{{.Title}}</h4>
+      <div class="col-lg-2 mt-5 d-none d-sm-block">
+        {{ partial "home-sidebar-left.html" . }}
       </div>
-    </div>
-  </div>
-</section>
-<!-- /page-title -->
+      <div class="col-lg-8 mt-5 shadow  p-4 mb-5 bg-white rounded">
+        <div class="section-heading">
+          <h5>{{.Title}}</h5>
+        </div>
 
-<!-- search result -->
-<section class="section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 mx-auto">
         <div id="search-results"></div>
         <script id="search-result-template" type="text/x-js-template">
           <ul class="search-result list-unstyled" id="summary-${key}">
@@ -28,10 +22,18 @@
             </li>
           </ul>
         </script>
+
       </div>
+      <!-- /blog post -->
+      <div class="col-lg-2 mt-5">
+        {{ partial "home-sidebar-right.html" . }}
+      </div>
+
     </div>
+
+  </div>
   </div>
 </section>
-<!-- /search result -->
+<!-- /category post -->
 
 {{ end }}

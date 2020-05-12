@@ -1,0 +1,69 @@
+<div class=" p-3 mb-5 shadow bg-white rounded">
+
+  <div class="widget">
+    <div class="section-heading">
+      <h5>Youtube</h5>
+    </div>
+    <!-- Social Followers Info -->
+    <div class="social-followers-info">
+      <script src="https://apis.google.com/js/platform.js"></script>
+
+      <div class="g-ytsubscribe" data-channelid="UCDnWKzj5Mt62kyHZuckrUEw" data-layout="full" data-count="default">
+      </div>
+
+      <a href="https://www.youtube.com/channel/UCDnWKzj5Mt62kyHZuckrUEw" class="youtube-subscribers" target="_blank"><i
+          class="fa fa-youtube"></i> <span>Subscribe</span></a>
+
+
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="section-heading">
+      <h5>Latest Posts</h5>
+    </div>
+
+    {{ range first 5 ( where .Site.Pages "Type" "post") }}
+    <div>
+      <article class="text-center">
+        <h5> <a class="post-title" href="{{.Permalink}}">{{.Title}}</a></h5>
+        <a class="post-title" href="{{.Permalink}}"><img class="img-fluid mb-4 rounded "
+            src="{{.Params.Image | absURL }}" alt="post-thumb"></a>
+
+
+
+
+      </article>
+      <hr class="mt-2 mb-3" />
+    </div>
+    {{ end }}
+  </div>
+  <!-- Resposive -->
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8988165810598781" data-ad-slot="3815719528"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+  <div class="widget">
+    <div class="section-heading">
+      <h5>Random Posts</h5>
+    </div>
+
+    {{ $randomPosts := shuffle (where .Site.Pages "Type" "post") | first 5 }}
+
+    {{ range $randomPosts  }}
+    <div>
+      <article class="text-center">
+        <h5> <a class="post-title" href="{{.Permalink}}">{{.Title}}</a></h5>
+        <a class="post-title" href="{{.Permalink}}"> <img class="img-fluid mb-4 rounded "
+            src="{{.Params.Image | absURL }}" alt="post-thumb"> </a>
+
+
+
+      </article>
+      <hr class="mt-2 mb-3" />
+    </div>
+    {{ end }}
+  </div>
+</div>

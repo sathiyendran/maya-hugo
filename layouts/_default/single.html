@@ -1,33 +1,111 @@
 {{ define "main" }}
 
-<!-- page-title -->
-<section class="section bg-secondary">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <h4>{{ .Title }}</h4>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /page-title -->
 
 <!-- blog single -->
 <section>
   <div class="container">
     <div class="row">
+
       <div class="col-lg-8">
-        <ul class="list-inline d-flex justify-content-between py-3">
-          <li class="list-inline-item"><i class="ti-user mr-2"></i>Post by {{.Site.Params.author}}</li>
-          <li class="list-inline-item"><i class="ti-calendar mr-2"></i>{{ .PublishDate.Format "Jan 02, 2006" }}</li>
-        </ul>
-        <article class="content">
-          <img src="{{.Params.Image | absURL }}" alt="post-thumb" class="img-fluid rounded float-left mr-5 mb-4">
-          {{.Content}}
-        </article>
+        <div class="row shadow bg-white rounded  mt-4 mb-5 p-3">
+          <h4 class="post-title">{{ .Title }}</h4>
+          <ul class="list-inline d-flex justify-content-between py-3">
+            <li class="list-inline-item"><i class="ti-layers mr-2"></i>
+
+              {{ range $name := .Params.categories }}
+              <a class="text-uppercase" href="{{ "categories/" | relLangURL }}{{ $name | urlize | lower }}"></a>
+              {{ $name }}
+              </a>
+              {{ end }}
+
+            </li>
+            <li class="list-inline-item"><i class="ti-calendar mr-2"></i>{{ .PublishDate.Format "Jan 02, 2006" }}</li>
+          </ul>
+
+          <div class="col-lg-12">
+            {{.Content}}
+          </div>
+          <div class="col-lg-12 mt-4 mb-4">
+            <h6 class="widget-title text-dark">Tags</h6>
+            {{ $taxonomy := "tags" }}
+            {{ with .Param $taxonomy }}
+            <ul class="list-inline fotter-tag-list">
+              {{ range $index, $tag := . }}
+              {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) -}}
+
+              <li class="list-inline-item m-1">
+                <a href="{{ .Permalink }}">#{{ $tag | humanize }}</a>
+              </li>
+
+              {{- end -}}
+
+              {{- end -}}
+            </ul>
+            {{ end }}
+          </div>
+
+        </div>
+
+
+        <div class="row shadow bg-white rounded  mt-4 p-3">
+
+          <!-- Related Post Area -->
+          <div class="bg-white mb-30 px-30 pt-30 box-shadow">
+            <!-- Section Title -->
+            <div class="section-heading">
+              <h5>Related Post</h5>
+            </div>
+            <div class="row">
+
+              {{ $randomPosts := shuffle (where .Site.Pages "Type" "post") | first 3 }}
+
+              {{ range $randomPosts  }}
+
+
+              <!-- Single Blog Post -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-blog-post style-4 mb-30">
+                  <article class="text-center">
+
+                    <a class="post-title" href="{{.Permalink}}"> <img class="img-fluid mb-4 rounded "
+                        src="{{.Params.Image | absURL }}" alt="post-thumb"> </a>
+
+                    <h5> <a class="post-title" href="{{.Permalink}}">{{.Title}}</a></h5>
+
+                  </article>
+                </div>
+              </div>
+              {{ end }}
+
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row shadow bg-white rounded  mt-4 mb-5 p-3">
+
+          <!-- Related Post Area -->
+          <div class="bg-white mb-30 px-30 pt-30 box-shadow">
+            <!-- Section Title -->
+            <div class="section-heading">
+              <h5>LEAVE A REPLY</h5>
+            </div>
+            <div class="row p-3">
+              {{ template "_internal/disqus.html" . }}
+
+            </div>
+          </div>
+        </div>
+
+
       </div>
-      {{partial "sidebar.html" . }}
+
+      <div class="col-lg-4 mt-4 mb-5">
+        {{ partial "sidebar.html" . }}
+      </div>
+
     </div>
+  </div>
   </div>
 </section>
 <!-- /blog single -->

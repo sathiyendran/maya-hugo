@@ -1,0 +1,59 @@
+<div class="shadow p-3 mb-5 bg-white rounded">
+
+  <div class="widget">
+
+    <div class="section-heading">
+      <h5>Catogries</h5>
+    </div>
+    <div class="media mb-4">
+
+      {{- if isset .Site.Taxonomies "categories" }}
+      {{- if not (eq (len .Site.Taxonomies.categories) 0) }}
+      <ul class="list-group list-group-flush">
+        {{- range $name, $items := .Site.Taxonomies.categories }}
+
+        <li class="list-group-item ">
+          <a href="{{ "categories/" | relLangURL }}{{ $name | urlize | lower }}"> {{ $name | title | humanize }}
+
+          </a>
+
+        </li>
+
+        {{- end }}
+      </ul>
+      {{- end }}
+      {{- end }}
+
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="section-heading">
+      <h5>Latest Download</h5>
+    </div>
+
+    {{ $download := .Site.Taxonomies.categories.download  }}
+    {{ range first 5 ( $download.Pages) }}
+    <div>
+      <article class="text-center">
+        <h5> <a class="post-title" href="{{.Permalink}}">{{.Title}}</a></h5>
+        <a class="post-title" href="{{.Permalink}}"> <img class="img-fluid mb-4 rounded "
+            src="{{.Params.Image | absURL }}" alt="post-thumb"> </a>
+
+
+
+      </article>
+      <hr class="mt-2 mb-3" />
+    </div>
+    {{ end }}
+  </div>
+
+  <!-- Resposive -->
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8988165810598781" data-ad-slot="3815719528"
+    data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+
+</div>

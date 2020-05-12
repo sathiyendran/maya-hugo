@@ -1,0 +1,62 @@
+{{ define "main" }}
+<!-- category post -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 shadow bg-white rounded  mt-4 p-3">
+            <div class="text-center">
+                <h1>
+                    Oops!</h1>
+                <h2>
+                    404 Not Found</h2>
+                <div class="text-center">
+                    Sorry, an error has occured, Requested page not found!
+                </div>
+                <br>
+                <div class="text-center">
+                    <a href="{{.Site.BaseURL}}" class="btn btn-primary btn-lg"><span
+                            class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    </div>
+
+    <div class="row shadow bg-white rounded  mt-4 mb-5 p-3">
+
+        <!-- Related Post Area -->
+        <div class="bg-white mb-30 px-30 pt-30 box-shadow">
+            <!-- Section Title -->
+            <div class="section-heading">
+                <h5>Random Post</h5>
+            </div>
+            <div class="row">
+
+                {{ $randomPosts := shuffle (where .Site.Pages "Type" "post") | first 9}}
+
+                {{ range $randomPosts  }}
+
+
+                <!-- Single Blog Post -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-blog-post style-4 mb-30">
+                        <article class="text-center">
+
+                            <a class="post-title" href="{{.Permalink}}"> <img class="img-fluid mb-4 rounded "
+                                    src="{{.Params.Image | absURL }}" alt="post-thumb"> </a>
+
+                            <h5> <a class="post-title" href="{{.Permalink}}">{{.Title}}</a></h5>
+
+                        </article>
+                    </div>
+                </div>
+                {{ end }}
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{{ end }}
